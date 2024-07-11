@@ -134,6 +134,16 @@ GET http://localhost:8080/search?q=John%20Niyontwali
 }
 ```
 
+### Swagger Documentation
+
+This backend includes Swagger documentation, which can be accessed both locally and online through the following links:
+
+- **Local Documentation**: [http://localhost:8080/v1/docs](http://localhost:8080/v1/docs). Note that is if your port set in `.env` is 8080
+- **Online Documentation**: [https://api.google-clone.nijohn.dev/v1/docs](https://api.google-clone.nijohn.dev/v1/docs). You can access it from anywhere.
+
+Below is the look of the swagger documentation page
+<img width="1466" alt="Screenshot 2024-07-11 at 19 13 31" src="https://github.com/niyontwali/google-clone-backend/assets/16195731/b594cc6c-20c5-4fb3-8f79-868f11ba9ed4">
+
 ## Database Model
 
 The `Search` model is used to store search results with the following fields:
