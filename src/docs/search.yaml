@@ -1,0 +1,103 @@
+openapi: 3.0.0
+info:
+  title: Google Search API Backend
+  version: 1.0.0
+  description: Backend service integrating with Google Search API.
+paths:
+  /search:
+    get:
+      summary: Perform a search query
+      description: Fetches search results either from the database or Google API if not found in the database.
+      parameters:
+        - in: query
+          name: q
+          required: true
+          schema:
+            type: string
+          description: The search query string.
+      responses:
+        '200':
+          description: Search results fetched successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SearchResult'
+        '400':
+          description: Query parameter is missing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Query parameter is required"
+        '403':
+          description: Google API request limit exceeded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Google API request limit exceeded. Please try again later."
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "An error occurred while processing your request. Please try again later."
+components:
+  schemas:
+    SearchResult:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "47a55ac7-b400-4069-8d0b-6895814425ca"
+        searchQuery:
+          type: string
+          example: "John Niyontwali"
+        displayLink:
+          type: string
+          example: "njohn.netlify.app"
+        title:
+          type: string
+          example: "John - Personal Portfolio"
+        snippet:
+          type: string
+          example: "JohnNiyontwali · Address: Kigali - Rwanda · Phone: +250 786 266 073 · Email: nijohn0001@gmail.com · github and gitlab usernames: niyontwali and nijohn"
+        image:
+          type: string
+          nullable: true
+          example: "https://example.com/image.jpg"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-07-11T12:56:23.000Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2024-07-11T12:56:23.000Z"
