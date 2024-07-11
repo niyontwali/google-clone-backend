@@ -6,7 +6,7 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Google Search API Backend',
+      title: 'Google Search Clone Backend',
       version: '1.0.0',
       description: 'Backend service integrating with Google Search API.',
     },
