@@ -25,7 +25,7 @@ const search = async (req, res) => {
         googleResults.map(async result => {
           return await Search.create({
             searchQuery: query,
-            displayLink: result.displayLink,
+            displayLink: result.link,
             title: result.title,
             snippet: result.snippet,
             image: result.pagemap?.cse_image?.[0]?.src || null,
