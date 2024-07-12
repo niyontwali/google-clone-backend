@@ -17,7 +17,7 @@ const fetchGoogleResults = async (query) => {
   } catch (error) {
     if (error.response) {
       if (error.response.status === 429) {
-        const err = new Error("Google API request limit exceeded. Please retry after 24 hours. In the meantime, you can search this data, which is locally stored in our database, to test the search engine's functionality.");
+        const err = new Error("Due to a limit on Google API requests (100/day), please retry after 24 hours. In the meantime, you can continue testing the search engine using our locally stored database from the google search. This message ensures clarity during testing, aligning with the assignment requirements for Google Search Clone.");
 
         err.statusCode = 429;
         throw err;
