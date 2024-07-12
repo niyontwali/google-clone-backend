@@ -22,7 +22,7 @@ const search = async (req, res) => {
 
       // Save the results to the database
       results = await Promise.all(
-        googleResults.map(async result => {
+        googleResults.map(async (result) => {
           return await Search.create({
             searchQuery: query,
             displayLink: result.link,
@@ -39,20 +39,24 @@ const search = async (req, res) => {
       data: results,
     });
   } catch (error) {
-    logger.error('Error while searching:', error.message);
+    logger.error(`Error while searching: ${error.message}`);
 
-    if (error.response && error.response.status === 403) {
-      // Handle Google API quota exceeded
-      return res.status(403).json({
+    const statusCode = error.statusCode || 500;
+    const message = error.message || 'An error occurred while processing your request. Please try again later.';
+
+    // Fetch data from the database if an error occurs related to google api limit
+    if (statusCode === 429) {
+      const dbResults = await Search.findAll();
+
+      return res.status(statusCode).json({
         ok: false,
-        message: 'Google API request limit exceeded. Please try again later.',
+        message,
+        data: dbResults.map(result => ({ id: result.id, searchQuery: result.searchQuery })),
       });
     }
-
-    return res.status(500).json({
+    return res.status(statusCode).json({
       ok: false,
-      message:
-        'An error occurred while processing your request. Please try again later.',
+      message,
     });
   }
 };
